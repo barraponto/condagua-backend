@@ -1,11 +1,17 @@
 const mongoose = require('../mongoose');
-const jwt = require('jsonwebtoken');
-const { JWT_SECRET, JWT_EXPIRY } = require('../config');
 
 const condoSchema = new mongoose.Schema({
   manager: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
   name: String,
+}, {
+  toJSON: { virtuals: true }
 });
+
+condoSchema.virtual('hydrometers', {
+  ref: 'Hydro',
+  localField: '_id',
+  foreignField: 'condo'
+})
 
 const Condo = mongoose.model('Condo', condoSchema);
 
