@@ -3,7 +3,7 @@ const path = require('path');
 const logger = require('morgan');
 const passport = require('./passport');
 
-const users = require('./routes/users');
+const user = require('./routes/user');
 const auth = require('./routes/auth');
 
 const app = express();
@@ -14,7 +14,7 @@ app.use(express.json());
 app.use(passport.initialize());
 
 app.use('/api/auth', auth);
-app.use('/api/users', users);
+app.use('/api/user', user);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

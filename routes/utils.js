@@ -1,3 +1,5 @@
+const passport = require('../passport');
+
 const requiredFields = (fields) => (req, res, next) => {
   if (fields.every(field => field in req.body)) { return next(); }
   else {
@@ -6,6 +8,9 @@ const requiredFields = (fields) => (req, res, next) => {
   }
 }
 
+const authenticate = passport.authenticate('jwt', { session: false });
+
 module.exports = {
   requiredFields,
+  authenticate,
 };
