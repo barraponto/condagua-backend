@@ -27,4 +27,11 @@ router.post('/condos/:id/hydrometers',
       .then((hydro) => res.json(hydro))
 );
 
+router.post('/hydrometers/:id/readings',
+  requiredFields(['value']),
+  ({ body: { value }, params: { id } }, res) =>
+    Hydro.findByIdAndUpdate(id, { $push: { readings: { value } } })
+      .then((hydro) => res.json(hydro))
+);
+
 module.exports = router;
