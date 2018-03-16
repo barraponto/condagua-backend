@@ -1,6 +1,7 @@
 const express = require('express');
 const path = require('path');
 const logger = require('morgan');
+const passport = require('./passport');
 
 const users = require('./routes/users');
 const auth = require('./routes/auth');
@@ -8,8 +9,9 @@ const auth = require('./routes/auth');
 const app = express();
 
 app.use(logger('dev'));
-app.use(express.json());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.json());
+app.use(passport.initialize());
 
 app.use('/api/auth', auth);
 app.use('/api/users', users);
