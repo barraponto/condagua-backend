@@ -1,6 +1,7 @@
 const { Router} = require('express');
 const { authenticate, requiredFields } = require('./utils');
 const Condo = require('../models/condo');
+const Hydro = require('../models/hydro');
 const router = Router();
 
 router.use(authenticate);
@@ -22,8 +23,8 @@ router.post('/condos',
 
 router.post('/condos/:id/hydrometers',
   requiredFields(['name']),
-  ({ body: { name }, user }, res) => Condo.create({ name, manager: user })
-    .then((condo) => res.json(condo))
+  ({ body: { name }, params: { id } }, res) => Hydro.create({ name, condo: id })
+      .then((hydro) => res.json(hydro))
 );
 
 module.exports = router;
