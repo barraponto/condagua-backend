@@ -3,6 +3,10 @@ const jwt = require('jsonwebtoken');
 const { JWT_SECRET, JWT_EXPIRY } = require('../config');
 
 const userSchema = new mongoose.Schema({
+  name: {
+    first: String,
+    last: String,
+  },
   social: {
     facebookId: String,
   },
@@ -15,11 +19,10 @@ userSchema.methods.generateToken = function() {
 
 const User = mongoose.model('User', userSchema);
 
-User.findOrCreate = function(data) {
-  return this.findOne(data)
-    .then(user => {
-      return user ? user : this.create(data)
-    });
+User.findOrCreate = function(condition, data) {
+  return this
+    .findOne(condition)
+    .then(user => user ? user : this.create(data));
 }
 
 module.exports = User;
